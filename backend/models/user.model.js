@@ -34,6 +34,16 @@ const userSchema = new mongoose.Schema({
     github: { type: String, default: "" },
     facebook: { type: String, default: "" },
 
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user",
+        index: true
+    },
+
+    isAdmin: { type: Boolean, default: false },
+    isBlocked: { type: Boolean, default: false },
+
 
 }, { timestamps: true })
 
