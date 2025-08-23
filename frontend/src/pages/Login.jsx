@@ -12,7 +12,7 @@ import {
   ArrowLeft,
   CheckCircle2,
 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom"; // ✅ added useLocation
 import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
@@ -20,6 +20,7 @@ import { setUser } from "@/redux/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const [input, setInput] = useState({ email: "", password: "" });
@@ -38,23 +39,60 @@ const Login = () => {
     setSubmitting(true);
 
     try {
-      const response = await axios.post(
-        `http://localhost:3000/api/v1/user/login`,
+      const { data } = await axios.post(
+        "http://localhost:3000/api/v1/user/login",
         input,
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
-      if (response.data.success) {
-        dispatch(setUser(response.data.user));
-        toast.success(response.data.message || "Signed in");
-        navigate("/");
+
+      if (data?.success && data?.user) {
+        const u = data.user;
+        dispatch(setUser(u));
+
+        // remember email locally (optional)
+        try {
+          if (remember)
+            localStorage.setItem("remember_email", u?.email || input.email);
+          else localStorage.removeItem("remember_email");
+        } catch {}
+
+        toast.success(data.message || "Signed in");
+
+        const isAdmin = u?.role === "admin" || u?.isAdmin === true;
+        const from = location.state?.from?.pathname;
+
+        const dest = isAdmin
+          ? "/admin"
+          : from && from !== "/admin"
+          ? from
+          : "/dashboard/profile";
+
+        navigate(dest, { replace: true });
+        return;
       }
+
+      toast.error(data?.message || "Login failed");
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Login failed");
+      const status = error?.response?.status;
+      const payload = error?.response?.data;
+      const msg = payload?.message || "Login failed";
+
+      // blocked user → show blocked page
+      if (status === 403 && (payload?.blocked || /block/i.test(msg))) {
+        try {
+          localStorage.removeItem("remember_email");
+        } catch {}
+        toast.error("Your account is blocked.");
+        navigate("/blocked", { replace: true, state: { email: input.email } });
+        return;
+      }
+
+      toast.error(msg);
       // eslint-disable-next-line no-console
-      console.log(error?.response?.data?.message || error?.message);
+      console.log(msg);
     } finally {
       setSubmitting(false);
     }
@@ -105,7 +143,7 @@ const Login = () => {
             </ul>
           </section>
 
-          {/* Right: Sign-in card (no Blogify brand) */}
+          {/* Right: Sign-in card */}
           <section className="order-1 lg:order-2">
             <Card className="mx-auto w-full max-w-lg rounded-2xl border-none shadow-xl bg-white dark:bg-neutral-900">
               <CardContent className="p-6 sm:p-8">
@@ -163,7 +201,9 @@ const Login = () => {
                       />
                       <button
                         type="button"
-                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
                         onClick={() => setShowPassword((v) => !v)}
                       >
