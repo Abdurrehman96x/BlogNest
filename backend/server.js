@@ -38,7 +38,7 @@ app.use("/api/v1/admin", adminRoute);
 // Serve frontend build
 app.use(express.static(path.join(_dirname, "/frontend/dist")));
 app.get('/api/v1/ping', (_, res) => {
-  res.json({ message: 'pong' });
+  res.json({ message: 'pong Test' });
 });
 
 app.listen(PORT, () => {
