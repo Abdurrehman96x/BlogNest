@@ -41,6 +41,4 @@ app.get('/api/v1/ping', (_, res) => {
   res.json({ message: 'pong Test' });
 });
 
-app.listen(PORT, () => {
-  console.log(` Server running at port ${PORT}`);
-});
+export default app;
