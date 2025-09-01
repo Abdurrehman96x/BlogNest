@@ -50,7 +50,7 @@ const Signup = () => {
     try {
       // 1) Register
       const reg = await axios.post(
-        "http://localhost:3000/api/v1/user/register",
+        `${import.meta.env.VITE_API_URL}/api/v1/user/register`,
         user,
         {
           headers: { "Content-Type": "application/json" },
@@ -68,7 +68,7 @@ const Signup = () => {
 
       // 2) Auto-login
       const login = await axios.post(
-        "http://localhost:3000/api/v1/user/login",
+        `${import.meta.env.VITE_API_URL}/api/v1/user/login`,
         { email: user.email, password: user.password },
         {
           headers: { "Content-Type": "application/json" },

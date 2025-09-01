@@ -12,7 +12,7 @@ export default function PopularAuthors() {
     const getAllUsers = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:3000/api/v1/user/all-users`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/user/all-users`);
         if (res.data.success) setPopularUser(res.data.users);
       } catch (e) {
         console.error(e);

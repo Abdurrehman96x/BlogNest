@@ -42,7 +42,7 @@ export default function RecentBlog() {
       setError('');
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/v1/blog/get-published-blogs`,
+          `${import.meta.env.VITE_API_URL}/api/v1/blog/get-published-blogs`,
           { withCredentials: true }
         );
         if (res.data.success) dispatch(setBlog(res.data.blogs));

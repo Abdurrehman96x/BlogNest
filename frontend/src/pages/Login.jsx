@@ -12,7 +12,7 @@ import {
   ArrowLeft,
   CheckCircle2,
 } from "lucide-react";
-import { Link, useNavigate, useLocation } from "react-router-dom"; // ✅ added useLocation
+import { Link, useNavigate, useLocation } from "react-router-dom"; 
 import axios from "axios";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
@@ -40,7 +40,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/v1/user/login",
+        `${import.meta.env.VITE_API_URL}/api/v1/user/login`,
         input,
         {
           headers: { "Content-Type": "application/json" },

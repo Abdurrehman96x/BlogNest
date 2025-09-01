@@ -115,7 +115,7 @@ export const editComment = async (req, res) => {
 
 export const likeComment = async (req, res) => {
   try {
-    const userId = req.id; // Assuming you're using auth middleware to get user ID
+    const userId = req.id; // user from auth middleware
     const commentId = req.params.id;
 
     const comment = await Comment.findById(commentId).populate("userId");
@@ -123,24 +123,31 @@ export const likeComment = async (req, res) => {
       return res.status(404).json({ success: false, message: "Comment not found" });
     }
 
-    const alreadyLiked = comment.likes.includes(userId);
+    // Convert all IDs to strings before comparison
+    const alreadyLiked = comment.likes.some(
+      id => id.toString() === userId.toString()
+    );
 
     if (alreadyLiked) {
-      // If already liked, unlike it
-      comment.likes = comment.likes.filter(id => id !== userId);
-      comment.numberOfLikes -= 1;
+      // Unlike
+      comment.likes = comment.likes.filter(
+        id => id.toString() !== userId.toString()
+      );
     } else {
-      // If not liked yet, like it
+      // Like
       comment.likes.push(userId);
-      comment.numberOfLikes += 1;
     }
+
+    // 🚀 Always sync count with array length (no manual +/-)
+    comment.numberOfLikes = comment.likes.length;
+
     await comment.save();
+
     res.status(200).json({
       success: true,
       message: alreadyLiked ? "Comment unliked" : "Comment liked",
       updatedComment: comment,
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({
