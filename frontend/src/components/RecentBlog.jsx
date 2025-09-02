@@ -57,7 +57,7 @@ export default function RecentBlog() {
   }, [dispatch]);
 
   const filteredSorted = useMemo(() => {
-    let data = [...blog];
+    let data = [...(blog ?? [])];
 
     // search
     if (query.trim()) {
