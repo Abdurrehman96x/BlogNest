@@ -44,7 +44,7 @@ const CommentBox = ({ selectedBlog }) => {
         const data = res.data.comments || [];
         dispatch(setComment(data));
       } catch (error) {
-        console.log(error);
+
       }
     };
     if (selectedBlog?._id) getAllCommentsOfBlog();
@@ -84,7 +84,7 @@ const CommentBox = ({ selectedBlog }) => {
         setContent('');
       }
     } catch (error) {
-      console.log(error);
+
       const msg = error?.response?.data?.message || "Couldn't add comment";
       toast.error(msg);
     }
@@ -125,7 +125,7 @@ const CommentBox = ({ selectedBlog }) => {
         setActiveReplyId(null);
       }
     } catch (error) {
-      console.log(error);
+
       const msg = error?.response?.data?.message || "Couldn't add reply";
       toast.error(msg);
     }
@@ -160,7 +160,7 @@ const CommentBox = ({ selectedBlog }) => {
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.log(error);
+
       toast.error("Failed to delete comment");
     }
   };
@@ -199,7 +199,7 @@ const CommentBox = ({ selectedBlog }) => {
         setEditedContent('');
       }
     } catch (error) {
-      console.log(error);
+
       toast.error("Failed to edit comment");
     }
   };

@@ -31,7 +31,7 @@ const BlogView = () => {
     const { comment } = useSelector(store => store.comment)
     const [liked, setLiked] = useState(selectedBlog?.likes.includes(user?._id) || false);
     const dispatch = useDispatch()
-    console.log(selectedBlog);
+ 
 
     const likeOrDislikeHandler = async () => {
         try {
@@ -53,7 +53,7 @@ const BlogView = () => {
                 dispatch(setBlog(updatedBlogData))
             }
         } catch (error) {
-            console.log(error);
+
             toast.error(error.response.data.message)
 
         }

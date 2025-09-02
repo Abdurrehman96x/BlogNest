@@ -92,7 +92,7 @@ const Signup = () => {
       }
     } catch (err) {
       // Keep this local to the page; don't change store or other files
-      console.log(err?.response?.data || err?.message);
+
       toast.error(err?.response?.data?.message || "Something went wrong");
     } finally {
       setSubmitting(false);

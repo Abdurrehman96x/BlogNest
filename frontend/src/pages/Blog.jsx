@@ -19,7 +19,7 @@ const Blog = () => {
           dispatch(setBlog(res.data.blogs))
         }
       } catch (error) {
-        console.log(error)
+
       }
     }
     getAllPublsihedBlogs()

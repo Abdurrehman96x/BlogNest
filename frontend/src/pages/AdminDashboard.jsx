@@ -48,7 +48,7 @@ const AdminDashboard = () => {
       });
       setStats(res.data);
     } catch (e) {
-      console.log(e);
+
       toast.error(e?.response?.data?.message || "Failed to load stats");
     }
   };
@@ -68,7 +68,7 @@ const AdminDashboard = () => {
         pages: res.data.pages,
       });
     } catch (e) {
-      console.log(e);
+
       toast.error(e?.response?.data?.message || "Failed to load users");
     } finally {
       setLoading(false);
@@ -104,7 +104,7 @@ const AdminDashboard = () => {
         toast.success(res.data.message);
       }
     } catch (e) {
-      console.log(e);
+
       toast.error(e?.response?.data?.message || "Failed to update user status");
     } finally {
       setLoadingBlockId(null);

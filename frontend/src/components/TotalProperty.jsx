@@ -18,7 +18,7 @@ const TotalProperty = () => {
                 dispatch(setBlog(res.data.blogs))
             }
         } catch (error) {
-            console.log(error);
+
 
         }
     }
@@ -29,7 +29,7 @@ const TotalProperty = () => {
              setTotalComments(res.data.totalComments)
           }
         } catch (error) {
-          console.log(error);
+
           
         }
     }
@@ -41,7 +41,7 @@ const TotalProperty = () => {
            setTotalLikes(res.data.totalLikes)
         }
       } catch (error) {
-       console.log(error);
+
         
       }
     }

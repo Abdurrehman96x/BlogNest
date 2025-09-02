@@ -22,7 +22,7 @@ const Comments = () => {
     useEffect(()=>{
         getTotalComments()
     },[])
-    console.log(allComments);
+
     
   return (
     <div className='pb-10 pt-20 md:ml-[320px] h-screen'>

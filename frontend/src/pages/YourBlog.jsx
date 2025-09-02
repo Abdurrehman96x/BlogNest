@@ -68,7 +68,7 @@ const YourBlog = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { blog } = useSelector(store => store.blog)
-    console.log(blog);
+
 
 
     const getOwnBlog = async () => {
@@ -90,7 +90,6 @@ const YourBlog = () => {
                 dispatch(setBlog(updatedBlogData))
                 toast.success(res.data.message)
             }
-            console.log(res.data.message);
 
         } catch (error) {
             console.log(error);

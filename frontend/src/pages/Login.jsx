@@ -92,7 +92,7 @@ const Login = () => {
 
       toast.error(msg);
       // eslint-disable-next-line no-console
-      console.log(msg);
+
     } finally {
       setSubmitting(false);
     }
@@ -216,25 +216,7 @@ const Login = () => {
                     </div>
                   </div>
 
-                  {/* Remember / Forgot */}
-                  <div className="flex items-center justify-between">
-                    <label className="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 select-none">
-                      <input
-                        type="checkbox"
-                        checked={remember}
-                        onChange={(e) => setRemember(e.target.checked)}
-                        className="h-4 w-4 rounded border-slate-300 dark:border-neutral-600 text-slate-900 dark:text-neutral-100 focus:ring-slate-400 dark:focus:ring-neutral-400"
-                      />
-                      Remember me
-                    </label>
-
-                    <Link
-                      to="/forgot-password"
-                      className="text-sm font-medium text-emerald-700 dark:text-emerald-400 hover:underline"
-                    >
-                      Forgot password?
-                    </Link>
-                  </div>
+            
 
                   {/* Submit */}
                   <Button
